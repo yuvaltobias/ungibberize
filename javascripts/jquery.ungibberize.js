@@ -11,6 +11,7 @@ jQuery.fn.extend({
             pos.left += this.width() - 16;
         }
         
+        var undoVal = "";
         
         var button = $("<img>").attr("src", "images/ungibberize-he-16.png");
         button.css({
@@ -21,11 +22,55 @@ jQuery.fn.extend({
         });
         button.appendTo(this.parent());
         button.click(function() {
-            self.val(hebToEng(self.val()));
+            undoVal = self.val();
+            self.val(ungibberize.engToHeb(self.val()));
+            button.fadeOut();
+            undoBtn.fadeIn();
+            state="fixed";
+        });
+        
+        var undoBtn = $("<img>").attr("src", "images/ungibberize-rtlundo-16.png");
+        undoBtn.css({
+            display: "none",
+            position: "absolute",
+            left: pos.left + "px",
+            top: pos.top + "px"
+        });
+        undoBtn.appendTo(this.parent());
+        undoBtn.click(function() {
+            self.val(undoVal);
+            undoBtn.fadeOut();
+            button.fadeIn();
+            state="button";
         });
             
-        this.focus(function() {
-            button.fadeIn();
+        var state="fresh";
+            
+        this.keypress(function() {
+            switch(state) {
+                case "fresh":
+                    if(ungibberize.shouldDisplayUngibberize(self.val())) {
+                        button.fadeIn();
+                        state="button";
+                    }
+                    break;
+                case "button":
+                    break;
+                case "fixed":
+                    undoBtn.fadeOut();
+                    state = "dirty";
+                    break;
+                case "dirty":
+                    if(self.val() === "") {
+                        state = "fresh";
+                    }
+                    break;
+            }
+        });
+        
+        this.blur(function() {
+            button.fadeOut();
+            undoBtn.fadeOut();
         });
     }
 });
