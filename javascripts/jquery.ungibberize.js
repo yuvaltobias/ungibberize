@@ -27,6 +27,7 @@ jQuery.fn.extend({
             button.fadeOut();
             undoBtn.fadeIn();
             state="fixed";
+            self.focus();
         });
         
         var undoBtn = $("<img>").attr("src", "images/ungibberize-rtlundo-16.png");
@@ -42,6 +43,7 @@ jQuery.fn.extend({
             undoBtn.fadeOut();
             button.fadeIn();
             state="button";
+            self.focus();
         });
             
         var state="fresh";
@@ -71,6 +73,12 @@ jQuery.fn.extend({
         this.blur(function() {
             button.fadeOut();
             undoBtn.fadeOut();
+        }).focus(function() {
+            if (state == "button") {
+                button.fadeIn();
+            } else if (state == "fixed") {
+                undoBtn.fadeIn();
+            }
         });
     }
 });
