@@ -3,8 +3,6 @@ jQuery.fn.extend({
         var self = this;
         var pos = this.offset();
         
-        console.log(pos);
-        
         pos.top += this.outerHeight() / 2 - 8;
         pos.left += (this.outerWidth() - this.width()) / 2;
         if(this.css("direction") == "ltr") {
