@@ -9,6 +9,8 @@ jQuery.fn.extend({
             pos.left += this.width() - 16;
         }
         
+        
+        
         var undoVal = "";
         
         var button = $("<img>").attr("src", "images/ungibberize-he-16.png");
@@ -50,6 +52,8 @@ jQuery.fn.extend({
             switch(state) {
                 case "fresh":
                     if(ungibberize.shouldDisplayUngibberize(self.val())) {
+                        self.width(self.width() - 18);
+                        self.css("padding-left", 18);
                         button.fadeIn();
                         state="button";
                     }
@@ -58,6 +62,8 @@ jQuery.fn.extend({
                     break;
                 case "fixed":
                     undoBtn.fadeOut();
+                    self.width(self.width() + 18);
+                    self.css("padding-left", 0);
                     state = "dirty";
                     break;
                 case "dirty":
