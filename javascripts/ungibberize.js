@@ -48,9 +48,31 @@ this.ungibberize = (function() {
         
         return hebrewCharsCount < englishCharsCount;
     }
-    
+
+    function calcOptimalImageSize( n ) {
+        var availableSizes = new Array(12, 16, 20, 32);
+
+        for( i = 0; i < availableSizes.length-1; i++ ) {
+            if( availableSizes[i] >= n ) {
+                return availableSizes[i];
+            }
+        }
+
+        return availableSizes.pop();
+    }
+
+    function getHeButtonFilename( height ) {
+        return "images/ungibberize-he-" + calcOptimalImageSize(height) + ".png"
+    }
+
+    function getUndoRTLButtonFilename( height ) {
+        return "images/ungibberize-rtlundo-" + calcOptimalImageSize(height) + ".png"
+    }
+
     return {
         engToHeb : engToHeb,
-        shouldDisplayUngibberize : shouldDisplayUngibberize
+        shouldDisplayUngibberize : shouldDisplayUngibberize,
+        getHeButtonFilename : getHeButtonFilename,
+        getUndoRTLButtonFilename : getUndoRTLButtonFilename
     }
 })();

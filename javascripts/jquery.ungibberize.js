@@ -3,7 +3,7 @@ jQuery.fn.extend({
         var self = this;
         var pos = this.offset();
         
-        pos.top += this.outerHeight() / 2 - 8;
+        pos.top += (this.outerHeight() - this.height()) / 2;
         pos.left += (this.outerWidth() - this.width()) / 2;
         if(this.css("direction") == "ltr") {
             pos.left += this.width() - 16;
@@ -13,7 +13,11 @@ jQuery.fn.extend({
         
         var undoVal = "";
         
-        var button = $("<img>").attr("src", "images/ungibberize-he-16.png");
+        var button = $("<img>").attr({
+	            src: ungibberize.getHeButtonFilename(this.height()),
+	            title: '?עברית',
+	            height: this.height(),
+	            width: this.height()});
         button.css({
             display: "none",
             position: "absolute",
@@ -30,7 +34,11 @@ jQuery.fn.extend({
             self.focus();
         });
         
-        var undoBtn = $("<img>").attr("src", "images/ungibberize-rtlundo-16.png");
+        var undoBtn = $("<img>").attr({
+	            src: ungibberize.getUndoRTLButtonFilename(this.height()),
+	            title: 'ביטול',
+	            height: this.height(),
+	            width: this.height()});
         undoBtn.css({
             display: "none",
             position: "absolute",
@@ -52,8 +60,8 @@ jQuery.fn.extend({
             switch(state) {
                 case "fresh":
                     if(ungibberize.shouldDisplayUngibberize(self.val())) {
-                        self.width(self.width() - 18);
-                        self.css("padding-left", 18);
+                        self.width(self.width() - self.height() + 2);
+                        self.css("padding-left", self.height() + 2);
                         button.fadeIn();
                         state="button";
                     }
@@ -62,7 +70,7 @@ jQuery.fn.extend({
                     break;
                 case "fixed":
                     undoBtn.fadeOut();
-                    self.width(self.width() + 18);
+                    self.width(self.width() + self.height() - 2);
                     self.css("padding-left", 0);
                     state = "dirty";
                     break;
