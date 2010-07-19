@@ -16,7 +16,7 @@ jQuery.fn.extend({
         
         var btnHe = $("<img>").attr({
             src: ungibberize.getHeButtonFilename(this.height()),
-            title: '?עברית',
+            title: 'עברית?',
             height: this.height(),
             width: this.height() });
         btnHe.css({
