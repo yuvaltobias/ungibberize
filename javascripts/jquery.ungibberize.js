@@ -5,9 +5,6 @@ jQuery.fn.extend({
         
         pos.top += (this.outerHeight() - this.height()) / 2;
         pos.left += (this.outerWidth() - this.width()) / 2;
-        /*if(this.css("direction") == "ltr") {
-            pos.left += this.width() - 16;
-        }*/
         
         var undoVal = "";
         
@@ -51,12 +48,18 @@ jQuery.fn.extend({
         });
 
         var state = ungibberize.shouldDisplayUngibberize(self.val()) ? "button" : "no_button";
+        if(state === "button") {
+            self.width(self.width() - self.height() - 2);
+            self.css("padding-left", self.height() + 2);
+        } else {
+            self.css("padding-left", 0);
+        }
 
         this.keypress(function() {
             switch(state) {
                 case "no_button":
                     if(ungibberize.shouldDisplayUngibberize(self.val())) {
-                        //self.width(self.width() - self.height() + 2);
+                        self.width(self.width() - self.height() - 2);
                         self.css("padding-left", self.height() + 2);
                         btnHe.fadeIn('fast');
                         state = "button";
@@ -65,14 +68,14 @@ jQuery.fn.extend({
                 case "button":
                     if(!ungibberize.shouldDisplayUngibberize(self.val())) {
                         btnHe.fadeOut('fast');
-                        //self.width(self.width() + self.height() - 2);
+                        self.width(self.width() + self.height() + 2);
                         self.css("padding-left", 0);
                         state = "no_button";
                     }
                     break;
                 case "undo":
                     btnUndo.fadeOut('fast');
-                    //self.width(self.width() + self.height() - 2);
+                    self.width(self.width() + self.height() + 2);
                     self.css("padding-left", 0);
                     state = "inactive";
                     if(self.val().length < 4) {
