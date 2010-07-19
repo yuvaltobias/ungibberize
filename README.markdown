@@ -38,4 +38,4 @@ The following state machine is used:
     |                                       |
     '---------------------------------------'
 
-Generally, the text field changes from `button` to `no_button` which shows or hides the correction button. Once clicked, an undo button is shown, at which time a click will undo and return to the `button` state, or a key will be pressed and no more corrections can be made. Clearing the text field resets the back to the `no_button` state.
+Generally, the text field changes from `button` to `no_button` which shows or hides the correction button. Once clicked, an undo button is shown, at which time a click will undo and return to the `button` state, or a key will be pressed and no more corrections can be made. Clearing the text field resets the state to `no_button`.
