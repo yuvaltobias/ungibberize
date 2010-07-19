@@ -55,7 +55,7 @@ jQuery.fn.extend({
             self.css("padding-left", 0);
         }
 
-        this.keypress(function() {
+        this.keyup(function() {
             switch(state) {
                 case "no_button":
                     if(ungibberize.shouldDisplayUngibberize(self.val())) {
