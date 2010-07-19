@@ -35,18 +35,18 @@ this.ungibberize = (function() {
         
         var hebrewChars  = 'אבגדהוזחטיכךלמםנןסעפףצץקרשת';
         var englishChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        var hebrewCharsCount  = 0;
-        var englishCharsCount = 0;
+        var hebrewCharCount  = 0;
+        var englishCharCount = 0;
         
         for( i = 0; i < s.length; i++ ) {
             if( hebrewChars.indexOf(s[i]) >= 0 ) {
-                hebrewCharsCount++;
+                hebrewCharCount++;
             } else if( englishChars.indexOf(s[i]) >= 0 ) {
-                englishCharsCount++;
+                englishCharCount++;
             }
         }
         
-        return hebrewCharsCount < englishCharsCount;
+        return hebrewCharCount < englishCharCount;
     }
 
     function calcOptimalImageSize( n ) {

@@ -5,91 +5,96 @@ jQuery.fn.extend({
         
         pos.top += (this.outerHeight() - this.height()) / 2;
         pos.left += (this.outerWidth() - this.width()) / 2;
-        if(this.css("direction") == "ltr") {
+        /*if(this.css("direction") == "ltr") {
             pos.left += this.width() - 16;
-        }
-        
-        
+        }*/
         
         var undoVal = "";
         
-        var button = $("<img>").attr({
-	            src: ungibberize.getHeButtonFilename(this.height()),
-	            title: '?עברית',
-	            height: this.height(),
-	            width: this.height()});
-        button.css({
+        var btnHe = $("<img>").attr({
+            src: ungibberize.getHeButtonFilename(this.height()),
+            title: '?עברית',
+            height: this.height(),
+            width: this.height() });
+        btnHe.css({
             display: "none",
             position: "absolute",
             left: pos.left + "px",
-            top: pos.top + "px"
-        });
-        button.appendTo(this.parent());
-        button.click(function() {
+            top: pos.top + "px" });
+        btnHe.appendTo(this.parent());
+        btnHe.click(function() {
             undoVal = self.val();
             self.val(ungibberize.engToHeb(self.val()));
-            button.fadeOut();
-            undoBtn.fadeIn();
-            state="fixed";
+            btnHe.fadeOut('fast');
+            btnUndo.fadeIn('fast');
+            state = "undo";
             self.focus();
         });
         
-        var undoBtn = $("<img>").attr({
-	            src: ungibberize.getUndoRTLButtonFilename(this.height()),
-	            title: 'ביטול',
-	            height: this.height(),
-	            width: this.height()});
-        undoBtn.css({
+        var btnUndo = $("<img>").attr({
+            src: ungibberize.getUndoRTLButtonFilename(this.height()),
+            title: 'ביטול',
+            height: this.height(),
+            width: this.height() });
+        btnUndo.css({
             display: "none",
             position: "absolute",
             left: pos.left + "px",
-            top: pos.top + "px"
-        });
-        undoBtn.appendTo(this.parent());
-        undoBtn.click(function() {
+            top: pos.top + "px" });
+        btnUndo.appendTo(this.parent());
+        btnUndo.click(function() {
             self.val(undoVal);
-            undoBtn.fadeOut();
-            button.fadeIn();
-            state="button";
+            btnUndo.fadeOut('fast');
+            btnHe.fadeIn('fast');
+            state = "button";
             self.focus();
         });
-            
-        var state="fresh";
-            
+
+        var state = ungibberize.shouldDisplayUngibberize(self.val()) ? "button" : "no_button";
+
         this.keypress(function() {
             switch(state) {
-                case "fresh":
+                case "no_button":
                     if(ungibberize.shouldDisplayUngibberize(self.val())) {
-                        self.width(self.width() - self.height() + 2);
+                        //self.width(self.width() - self.height() + 2);
                         self.css("padding-left", self.height() + 2);
-                        button.fadeIn();
-                        state="button";
+                        btnHe.fadeIn('fast');
+                        state = "button";
                     }
                     break;
                 case "button":
+                    if(!ungibberize.shouldDisplayUngibberize(self.val())) {
+                        btnHe.fadeOut('fast');
+                        //self.width(self.width() + self.height() - 2);
+                        self.css("padding-left", 0);
+                        state = "no_button";
+                    }
                     break;
-                case "fixed":
-                    undoBtn.fadeOut();
-                    self.width(self.width() + self.height() - 2);
+                case "undo":
+                    btnUndo.fadeOut('fast');
+                    //self.width(self.width() + self.height() - 2);
                     self.css("padding-left", 0);
-                    state = "dirty";
+                    state = "inactive";
+                    if(self.val().length < 4) {
+                        state = "no_button";
+                    }
                     break;
-                case "dirty":
-                    if(self.val() === "") {
-                        state = "fresh";
+                case "inactive":
+                    if(self.val().length < 4) {
+                        state = "no_button";
                     }
                     break;
             }
         });
         
         this.blur(function() {
-            button.fadeOut();
-            undoBtn.fadeOut();
+            btnHe.fadeOut('fast');
+            btnUndo.fadeOut('fast');
         }).focus(function() {
             if (state == "button") {
-                button.fadeIn();
-            } else if (state == "fixed") {
-                undoBtn.fadeIn();
+                btnHe.fadeIn('fast');
+            } else if (state == "undo") {
+                btnUndo.fadeIn('fast');
             }
         });
     }
