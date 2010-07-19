@@ -22,11 +22,11 @@ this.ungibberize = (function() {
       return converted;
     }
 
-    function hebToEng( hebrewString ) {
+    function he2en( hebrewString ) {
       return convert( hebrewString, hebrewToEnglishConversionTable);
     } 
 
-    function engToHeb( englishString ) {
+    function en2he( englishString ) {
       return convert( englishString, englishToHebrewConversionTable);
     }
     
@@ -70,7 +70,7 @@ this.ungibberize = (function() {
     }
 
     return {
-        engToHeb : engToHeb,
+        en2he : en2he,
         shouldDisplayUngibberize : shouldDisplayUngibberize,
         getHeButtonFilename : getHeButtonFilename,
         getUndoRTLButtonFilename : getUndoRTLButtonFilename

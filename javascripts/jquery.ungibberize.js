@@ -1,10 +1,16 @@
+       (function($) {
+           $(function() {
+                $('input.gibberizable-he').each(function(){ $(this).ungibberize();});
+            });
+        })(jQuery);
+
 jQuery.fn.extend({
     ungibberize : function() {
         var self = this;
         var pos = this.offset();
         
         pos.top += (this.outerHeight() - this.height()) / 2;
-        pos.left += (this.outerWidth() - this.width()) / 2;
+        pos.left += (this.outerWidth() - this.width()) / 2 + 3;
         
         var undoVal = "";
         
@@ -21,7 +27,7 @@ jQuery.fn.extend({
         btnHe.appendTo(this.parent());
         btnHe.click(function() {
             undoVal = self.val();
-            self.val(ungibberize.engToHeb(self.val()));
+            self.val(ungibberize.en2he(self.val()));
             btnHe.fadeOut('fast');
             btnUndo.fadeIn('fast');
             state = "undo";
