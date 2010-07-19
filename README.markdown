@@ -18,24 +18,24 @@ Ungibberize currently supports gibberish written in English instead of Hebrew.
 
 The following state machine is used:
 
-`
-                        gibberish
-            gnd  .-----not-detected-----.  gd
-            .-.  |                      |  .-.
-            v |  v                      |  | v
-       .-----------.    gibberish     .--------.
-  .--->| no_button |----detected----->| button |<---.
-  |    '-----------'                  '--------'    |
-  |          ^                            |         |
-  |          |                         clicked      |
-  |       cleared                         |         |
-  |          |                            v      clicked
-  |     .----------.                   .------.     |
-  |     | inactive |<------------------| undo |-----' 
-  |     '----------'                   '------' 
-  |        ^ |                            |
-  |        '-'                         cleared
-  |                                       |
-  '---------------------------------------'`
+
+                          gibberish
+              gnd  .-----not-detected-----.  gd
+              .-.  |                      |  .-.
+              v |  v                      |  | v
+         .-----------.    gibberish     .--------.
+    .--->| no_button |----detected----->| button |<---.
+    |    '-----------'                  '--------'    |
+    |          ^                            |         |
+    |          |                         clicked      |
+    |       cleared                         |         |
+    |          |                            v      clicked
+    |     .----------.                   .------.     |
+    |     | inactive |<------------------| undo |-----'
+    |     '----------'                   '------'
+    |        ^ |                            |
+    |        '-'                         cleared
+    |                                       |
+    '---------------------------------------'
 
 Generally, the text field changes from `button` to `no_button` which shows or hides the correction button. Once clicked, an undo button is shown, at which time a click will undo and return to the `button` state, or a key will be pressed and no more corrections can be made. Clearing the text field resets the back to the `no_button` state.
