@@ -8,11 +8,13 @@ Multi-language users often type many characters in a text field without looking 
 
 Ungibberize attempts to detect whether the text was entered in the correct language, and if not, show a button that fixes the mistyped text.
 
-Ungibberize currently supports gibberish written in English instead of Hebrew.
+Ungibberize currently supports only Englew gibberish -- English instead of Hebrew.
 
-## Installation
+## Installation and Usage
 
-## Usage
+1. Download the minified version at javascripts/ungibberize.jquery.min.js and the images at images/
+2. After including the jQuery library, add this: `<script src="javascripts/ungibberize.jquery.min.js" type="text/javascript"></script>`
+3. For every text field you would like the user to be able to ungibberize, add the class `gibberizable-he`
 
 ## Behavior
 
